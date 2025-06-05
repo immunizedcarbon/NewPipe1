@@ -111,6 +111,27 @@ You can install NewPipe using one of the following methods:
  4. Build a debug APK yourself. This is the fastest way to get new features on your device, but is much more complicated, so we recommend using one of the other methods.
  5. If you're interested in a specific feature or bugfix provided in a Pull Request in this repo, you can also download its APK from within the PR. Read the PR description for instructions. The great thing about PR-specific APKs is that they're installed side-by-side the official app, so you don't have to worry about losing your data or messing anything up.
 
+### Building a debug APK
+
+To build the app yourself, you need the Android SDK. Install it via Android Studio
+or directly from Google's command line tools and then specify the SDK location.
+Create a file named `local.properties` in the project root with the following
+content (replace the path with your actual SDK location):
+
+```
+sdk.dir=/path/to/Android/sdk
+```
+
+You can alternatively set the `ANDROID_HOME` environment variable.
+Once configured, run:
+
+```bash
+./gradlew assembleDebug
+```
+
+The generated APK can be found at
+`app/build/outputs/apk/debug/`.
+
 We recommend method 1 for most users. APKs installed using method 1 or 2 are compatible with each other (meaning that if you installed NewPipe using either method 1 or 2, you can also update NewPipe using the other), but not with those installed using method 3. This is due to the same signing key (ours) being used for 1 and 2, but a different signing key (F-Droid's) being used for 3. Building a debug APK using method 4 excludes a key entirely. Signing keys help ensure that a user isn't tricked into installing a malicious update to an app. When using method 5, each APK is signed with a different random key supplied by GitHub Actions, so you cannot even update it. You will have to backup and restore the app data each time you wish to use a new APK.
 
 In the meanwhile, if you want to switch sources for some reason (e.g. NewPipe's core functionality breaks and F-Droid doesn't have the latest update yet), we recommend following this procedure:
