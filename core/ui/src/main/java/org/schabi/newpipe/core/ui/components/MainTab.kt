@@ -3,9 +3,11 @@ package org.schabi.newpipe.core.ui.components
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.PlaylistPlay
 import androidx.compose.ui.graphics.vector.ImageVector
 
 enum class MainTab(val route: String, val label: String, val icon: ImageVector) {
     Trends("main", "Trends", Icons.Filled.Home),
-    History("history", "History", Icons.Filled.History)
+    History("history", "History", Icons.Filled.History),
+    Playlists("playlists", "Playlists", Icons.Filled.PlaylistPlay)
 }

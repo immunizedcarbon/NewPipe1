@@ -13,6 +13,8 @@ import androidx.navigation.NavType
 import org.schabi.newpipe.NewPlayerActivity
 import org.schabi.newpipe.feature.history.HistoryScreen
 import org.schabi.newpipe.feature.search.SearchScreen
+import org.schabi.newpipe.feature.playlists.PlaylistsScreen
+import org.schabi.newpipe.feature.playlists.PlaylistDetailScreen
 import org.schabi.newpipe.core.ui.components.MainTab
 
 @Composable
@@ -34,6 +36,13 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
                 onSearchClicked = { navController.navigate("search") }
             )
         }
+        composable(MainTab.Playlists.route) {
+            PlaylistsScreen(
+                onPlaylistSelected = { playlist -> navController.navigate("playlist/${playlist.id}") },
+                selectedTab = MainTab.Playlists,
+                onTabSelected = { tab -> if (tab != MainTab.Playlists) navController.navigate(tab.route) }
+            )
+        }
         composable("search") {
             SearchScreen(onStreamSelected = { stream -> navController.navigate("player/${stream.url}") })
         }
@@ -49,6 +58,13 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
                 })
                 navController.popBackStack()
             }
+        }
+        composable(
+            route = "playlist/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.LongType })
+        ) { backStackEntry ->
+            val id = backStackEntry.arguments?.getLong("id") ?: return@composable
+            PlaylistDetailScreen(id)
         }
     }
 }
