@@ -23,4 +23,6 @@ allprojects {
     }
     extra["kotlin_version"] = "2.1.21"
     extra["hilt_version"] = "2.51"
+    extra["compose_compiler_version"] = "1.5.10"
+    extra["compose_bom_version"] = "2025.06.01"
 }
