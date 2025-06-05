@@ -1,4 +1,10 @@
-include ':app'
+include(":app")
+include(":core:ui")
+include(":core:data")
+include(":core:model")
+include(":core:domain")
+include(":feature:player")
+include(":feature:main")
 
 // Use a local copy of NewPipe Extractor by uncommenting the lines below.
 // We assume, that NewPipe and NewPipe Extractor have the same parent directory.
