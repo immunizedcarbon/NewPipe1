@@ -41,6 +41,11 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = rootProject.extra["compose_compiler_version"] as String
     }
 
     packaging {
@@ -68,6 +73,12 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
     kapt("com.google.dagger:hilt-compiler:${rootProject.extra["hilt_version"]}")
+
+    implementation(platform("androidx.compose:compose-bom:${rootProject.extra["compose_bom_version"]}"))
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     implementation(project(":core:ui"))
     implementation(project(":core:domain"))

@@ -19,8 +19,16 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    buildFeatures { compose = true }
+    composeOptions {
+        kotlinCompilerExtensionVersion = rootProject.extra["compose_compiler_version"] as String
+    }
 }
 
 dependencies {
-    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation(platform("androidx.compose:compose-bom:${rootProject.extra["compose_bom_version"]}"))
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-tooling-preview")
 }
