@@ -9,11 +9,13 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.schabi.newpipe.core.domain.usecase.GetStreamDetailsUseCase
+import org.schabi.newpipe.core.domain.usecase.AddStreamToHistoryUseCase
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
     private val player: ExoPlayer,
-    private val getStreamDetails: GetStreamDetailsUseCase
+    private val getStreamDetails: GetStreamDetailsUseCase,
+    private val addStreamToHistory: AddStreamToHistoryUseCase
 ) : ViewModel() {
 
     fun prepare(url: String) {
@@ -21,6 +23,7 @@ class PlayerViewModel @Inject constructor(
             val result = getStreamDetails(url).first()
             result.onSuccess {
                 player.setMediaItem(MediaItem.fromUri(it.url))
+                addStreamToHistory(it)
                 player.prepare()
             }
         }
