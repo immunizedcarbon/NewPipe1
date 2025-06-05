@@ -23,6 +23,7 @@ class DefaultHistoryRepository @Inject constructor(
             list.map { entity ->
                 Stream(
                     url = entity.streamUrl,
+                    channelUrl = null,
                     title = entity.title,
                     thumbnailUrl = entity.thumbnailUrl,
                     duration = 0L,

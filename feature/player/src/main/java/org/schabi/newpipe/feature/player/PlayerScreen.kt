@@ -1,6 +1,8 @@
 package org.schabi.newpipe.feature.player
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.weight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,13 +22,17 @@ fun DefaultPlayerScreen(url: String, viewModel: PlayerViewModel = hiltViewModel(
     }
     val player = viewModel.getPlayer()
     DisposableEffect(Unit) {
-        onDispose {
-            player.release()
+        onDispose { player.release() }
+    }
+    Column(modifier = Modifier.fillMaxSize()) {
+        AndroidView(
+            modifier = Modifier.weight(1f),
+            factory = { context ->
+                PlayerView(context).apply { this.player = player }
+            }
+        )
+        Button(onClick = { viewModel.subscribeToCurrentChannel() }) {
+            Text("Subscribe")
         }
     }
-    AndroidView(modifier = Modifier.fillMaxSize(), factory = { context ->
-        PlayerView(context).apply {
-            this.player = player
-        }
-    })
 }

@@ -10,6 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 import org.schabi.newpipe.core.data.db.AppDatabase
 import org.schabi.newpipe.core.data.db.HistoryDao
+import org.schabi.newpipe.core.data.db.SubscriptionDao
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,4 +22,7 @@ object DatabaseModule {
 
     @Provides
     fun provideHistoryDao(db: AppDatabase): HistoryDao = db.historyDao()
+
+    @Provides
+    fun provideSubscriptionDao(db: AppDatabase): SubscriptionDao = db.subscriptionDao()
 }
