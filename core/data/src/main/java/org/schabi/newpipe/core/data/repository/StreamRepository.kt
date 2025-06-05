@@ -1,0 +1,7 @@
+package org.schabi.newpipe.core.data.repository
+
+import org.schabi.newpipe.core.model.Stream
+
+interface StreamRepository {
+    suspend fun getStream(url: String): Stream
+}

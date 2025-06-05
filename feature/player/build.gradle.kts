@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -27,4 +28,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
+    kapt("com.google.dagger:hilt-compiler:${rootProject.extra["hilt_version"]}")
 }

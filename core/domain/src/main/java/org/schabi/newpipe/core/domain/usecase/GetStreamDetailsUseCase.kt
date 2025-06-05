@@ -1,0 +1,15 @@
+package org.schabi.newpipe.core.domain.usecase
+
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import org.schabi.newpipe.core.data.repository.StreamRepository
+import org.schabi.newpipe.core.model.Stream
+import javax.inject.Inject
+
+class GetStreamDetailsUseCase @Inject constructor(
+    private val repository: StreamRepository
+) {
+    suspend operator fun invoke(url: String): Flow<Result<Stream>> = flow {
+        emit(runCatching { repository.getStream(url) })
+    }
+}
