@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.schabi.newpipe.core.data.repository.StreamRepository
 import org.schabi.newpipe.core.domain.usecase.GetStreamDetailsUseCase
+import org.schabi.newpipe.core.domain.usecase.GetTrendingStreamsUseCase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -13,4 +14,8 @@ object DomainModule {
     @Provides
     fun provideGetStreamDetailsUseCase(repository: StreamRepository): GetStreamDetailsUseCase =
         GetStreamDetailsUseCase(repository)
+
+    @Provides
+    fun provideGetTrendingStreamsUseCase(repository: StreamRepository): GetTrendingStreamsUseCase =
+        GetTrendingStreamsUseCase(repository)
 }
