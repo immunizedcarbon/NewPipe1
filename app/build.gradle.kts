@@ -85,4 +85,5 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":feature:player"))
     implementation(project(":feature:main"))
+    implementation(project(":feature:search"))
 }

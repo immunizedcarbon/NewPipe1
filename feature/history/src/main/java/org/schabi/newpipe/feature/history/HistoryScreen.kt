@@ -4,6 +4,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -21,11 +25,21 @@ fun HistoryScreen(
     onStreamSelected: (Stream) -> Unit,
     selectedTab: MainTab,
     onTabSelected: (MainTab) -> Unit,
+    onSearchClicked: () -> Unit,
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val history = viewModel.history.collectAsState().value
     Scaffold(
-        topBar = { TopAppBar(title = { Text("History") }) },
+        topBar = {
+            TopAppBar(
+                title = { Text("History") },
+                actions = {
+                    IconButton(onClick = onSearchClicked) {
+                        Icon(Icons.Filled.Search, contentDescription = "Search")
+                    }
+                }
+            )
+        },
         bottomBar = { MainNavigationBar(selectedTab, onTabSelected) }
     ) { padding ->
         LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
