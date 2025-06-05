@@ -120,9 +120,9 @@ android {
 ext {
     checkstyleVersion = '10.12.1'
 
-    androidxLifecycleVersion = '2.6.2'
-    androidxRoomVersion = '2.6.1'
-    androidxWorkVersion = '2.8.1'
+    androidxLifecycleVersion = '2.9.1'
+    androidxRoomVersion = '2.7.1'
+    androidxWorkVersion = '2.10.1'
 
     stateSaverVersion = '1.4.1'
     exoPlayerVersion = '2.19.1'
