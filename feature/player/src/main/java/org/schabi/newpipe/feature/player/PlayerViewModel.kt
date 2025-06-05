@@ -10,13 +10,18 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import org.schabi.newpipe.core.domain.usecase.GetStreamDetailsUseCase
 import org.schabi.newpipe.core.domain.usecase.AddStreamToHistoryUseCase
+import org.schabi.newpipe.core.domain.usecase.SubscribeToChannelUseCase
+import org.schabi.newpipe.core.model.Channel
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
     private val player: ExoPlayer,
     private val getStreamDetails: GetStreamDetailsUseCase,
-    private val addStreamToHistory: AddStreamToHistoryUseCase
+    private val addStreamToHistory: AddStreamToHistoryUseCase,
+    private val subscribeToChannel: SubscribeToChannelUseCase
 ) : ViewModel() {
+
+    private var currentChannel: Channel? = null
 
     fun prepare(url: String) {
         viewModelScope.launch {
@@ -24,6 +29,11 @@ class PlayerViewModel @Inject constructor(
             result.onSuccess {
                 player.setMediaItem(MediaItem.fromUri(it.url))
                 addStreamToHistory(it)
+                currentChannel = Channel(
+                    url = it.channelUrl ?: it.uploader ?: it.url,
+                    name = it.uploader ?: "",
+                    avatarUrl = null
+                )
                 player.prepare()
             }
         }
@@ -39,4 +49,9 @@ class PlayerViewModel @Inject constructor(
     }
 
     fun getPlayer(): ExoPlayer = player
+
+    fun subscribeToCurrentChannel() {
+        val channel = currentChannel ?: return
+        viewModelScope.launch { subscribeToChannel(channel) }
+    }
 }

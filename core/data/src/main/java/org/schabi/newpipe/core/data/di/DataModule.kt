@@ -7,9 +7,11 @@ import dagger.hilt.components.SingletonComponent
 import org.schabi.newpipe.core.data.repository.HistoryRepository
 import org.schabi.newpipe.core.data.repository.PlaylistRepository
 import org.schabi.newpipe.core.data.repository.StreamRepository
+import org.schabi.newpipe.core.data.repository.SubscriptionRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultHistoryRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultPlaylistRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultStreamRepository
+import org.schabi.newpipe.core.data.repository.impl.DefaultSubscriptionRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -22,4 +24,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindHistoryRepository(impl: DefaultHistoryRepository): HistoryRepository
+
+    @Binds
+    abstract fun bindSubscriptionRepository(impl: DefaultSubscriptionRepository): SubscriptionRepository
 }

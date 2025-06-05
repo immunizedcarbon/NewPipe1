@@ -13,6 +13,7 @@ class DefaultStreamRepository : StreamRepository {
         val info = StreamInfo.getInfo(service, url)
         return Stream(
             url = info.url,
+            channelUrl = info.uploaderUrl,
             title = info.name,
             thumbnailUrl = info.thumbnailUrl,
             duration = info.duration,
@@ -29,6 +30,7 @@ class DefaultStreamRepository : StreamRepository {
         return searchInfo.relatedItems.map { item ->
             Stream(
                 url = item.url,
+                channelUrl = item.uploaderUrl,
                 title = item.name,
                 thumbnailUrl = item.thumbnailUrl,
                 duration = item.duration,
@@ -46,6 +48,7 @@ class DefaultStreamRepository : StreamRepository {
         return info.relatedItems.map { item ->
             Stream(
                 url = item.url,
+                channelUrl = item.uploaderUrl,
                 title = item.name,
                 thumbnailUrl = item.thumbnailUrl,
                 duration = item.duration,
