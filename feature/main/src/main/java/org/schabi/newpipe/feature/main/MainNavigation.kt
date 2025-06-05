@@ -12,6 +12,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.NavType
 import org.schabi.newpipe.NewPlayerActivity
 import org.schabi.newpipe.feature.history.HistoryScreen
+import org.schabi.newpipe.feature.search.SearchScreen
 import org.schabi.newpipe.core.ui.components.MainTab
 
 @Composable
@@ -21,15 +22,20 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
             MainScreen(
                 onStreamSelected = { stream -> navController.navigate("player/${stream.url}") },
                 selectedTab = MainTab.Trends,
-                onTabSelected = { tab -> if (tab != MainTab.Trends) navController.navigate(tab.route) }
+                onTabSelected = { tab -> if (tab != MainTab.Trends) navController.navigate(tab.route) },
+                onSearchClicked = { navController.navigate("search") }
             )
         }
         composable(MainTab.History.route) {
             HistoryScreen(
                 onStreamSelected = { stream -> navController.navigate("player/${stream.url}") },
                 selectedTab = MainTab.History,
-                onTabSelected = { tab -> if (tab != MainTab.History) navController.navigate(tab.route) }
+                onTabSelected = { tab -> if (tab != MainTab.History) navController.navigate(tab.route) },
+                onSearchClicked = { navController.navigate("search") }
             )
+        }
+        composable("search") {
+            SearchScreen(onStreamSelected = { stream -> navController.navigate("player/${stream.url}") })
         }
         composable(
             route = "player/{url}",

@@ -4,6 +4,7 @@ import org.schabi.newpipe.core.data.repository.StreamRepository
 import org.schabi.newpipe.core.model.Stream
 import org.schabi.newpipe.extractor.NewPipe
 import org.schabi.newpipe.extractor.kiosk.KioskInfo
+import org.schabi.newpipe.extractor.search.SearchInfo
 import org.schabi.newpipe.extractor.stream.StreamInfo
 
 class DefaultStreamRepository : StreamRepository {
@@ -17,6 +18,23 @@ class DefaultStreamRepository : StreamRepository {
             duration = info.duration,
             uploader = info.uploaderName
         )
+    }
+
+    override suspend fun search(query: String): List<Stream> {
+        val service = NewPipe.getService(0)
+        val searchInfo = SearchInfo.getInfo(
+            service,
+            service.searchQHFactory.fromQuery(query, emptyList(), "")
+        )
+        return searchInfo.relatedItems.map { item ->
+            Stream(
+                url = item.url,
+                title = item.name,
+                thumbnailUrl = item.thumbnailUrl,
+                duration = item.duration,
+                uploader = item.uploaderName
+            )
+        }
     }
 
     override suspend fun getTrending(): List<Stream> {
