@@ -1,4 +1,4 @@
-package org.schabi.newpipe.feature.main
+package org.schabi.newpipe.feature.history
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,23 +17,19 @@ import org.schabi.newpipe.core.ui.components.MainNavigationBar
 import org.schabi.newpipe.core.ui.components.MainTab
 
 @Composable
-fun MainScreen(
+fun HistoryScreen(
     onStreamSelected: (Stream) -> Unit,
     selectedTab: MainTab,
     onTabSelected: (MainTab) -> Unit,
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: HistoryViewModel = hiltViewModel()
 ) {
-    val state = viewModel.uiState.collectAsState().value
+    val history = viewModel.history.collectAsState().value
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = "NewPipe") }) },
+        topBar = { TopAppBar(title = { Text("History") }) },
         bottomBar = { MainNavigationBar(selectedTab, onTabSelected) }
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            items(state.trendingStreams) { stream ->
+        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+            items(history) { stream ->
                 StreamItem(stream, onStreamSelected)
             }
         }
