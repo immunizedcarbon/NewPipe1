@@ -21,7 +21,7 @@ fun DefaultPlayerScreen(url: String, viewModel: PlayerViewModel = hiltViewModel(
     val player = viewModel.getPlayer()
     DisposableEffect(Unit) {
         onDispose {
-            player?.release()
+            player.release()
         }
     }
     AndroidView(modifier = Modifier.fillMaxSize(), factory = { context ->
