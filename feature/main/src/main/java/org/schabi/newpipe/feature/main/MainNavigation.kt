@@ -13,6 +13,7 @@ import androidx.navigation.NavType
 import org.schabi.newpipe.NewPlayerActivity
 import org.schabi.newpipe.feature.history.HistoryScreen
 import org.schabi.newpipe.feature.search.SearchScreen
+import org.schabi.newpipe.feature.settings.SettingsScreen
 import org.schabi.newpipe.core.ui.components.MainTab
 
 @Composable
@@ -23,7 +24,8 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
                 onStreamSelected = { stream -> navController.navigate("player/${stream.url}") },
                 selectedTab = MainTab.Trends,
                 onTabSelected = { tab -> if (tab != MainTab.Trends) navController.navigate(tab.route) },
-                onSearchClicked = { navController.navigate("search") }
+                onSearchClicked = { navController.navigate("search") },
+                onSettingsClicked = { navController.navigate("settings") }
             )
         }
         composable(MainTab.History.route) {
@@ -31,11 +33,15 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
                 onStreamSelected = { stream -> navController.navigate("player/${stream.url}") },
                 selectedTab = MainTab.History,
                 onTabSelected = { tab -> if (tab != MainTab.History) navController.navigate(tab.route) },
-                onSearchClicked = { navController.navigate("search") }
+                onSearchClicked = { navController.navigate("search") },
+                onSettingsClicked = { navController.navigate("settings") }
             )
         }
         composable("search") {
             SearchScreen(onStreamSelected = { stream -> navController.navigate("player/${stream.url}") })
+        }
+        composable("settings") {
+            SettingsScreen(onNavigateUp = { navController.popBackStack() })
         }
         composable(
             route = "player/{url}",

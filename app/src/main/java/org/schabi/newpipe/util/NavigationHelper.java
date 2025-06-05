@@ -63,7 +63,6 @@ import org.schabi.newpipe.player.helper.PlayerHelper;
 import org.schabi.newpipe.player.helper.PlayerHolder;
 import org.schabi.newpipe.player.playqueue.PlayQueue;
 import org.schabi.newpipe.player.playqueue.PlayQueueItem;
-import org.schabi.newpipe.settings.SettingsActivity;
 import org.schabi.newpipe.util.external_communication.ShareUtils;
 
 import java.util.List;
@@ -653,10 +652,6 @@ public final class NavigationHelper {
         context.startActivity(intent);
     }
 
-    public static void openSettings(final Context context) {
-        final Intent intent = new Intent(context, SettingsActivity.class);
-        context.startActivity(intent);
-    }
 
     public static void openDownloads(final Activity activity) {
         if (PermissionHelper.checkStoragePermissions(
