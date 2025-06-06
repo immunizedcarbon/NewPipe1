@@ -25,6 +25,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:model"))
+    implementation("androidx.compose.material:material-icons-extended")
     implementation(platform("androidx.compose:compose-bom:${rootProject.extra["compose_bom_version"]}"))
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
