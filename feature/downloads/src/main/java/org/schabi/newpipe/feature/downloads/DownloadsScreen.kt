@@ -17,6 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import org.schabi.newpipe.core.ui.components.MainNavigationBar
 import org.schabi.newpipe.core.ui.components.MainTab
+import org.schabi.newpipe.core.ui.ShimmeringStreamItem
+import org.schabi.newpipe.core.ui.EmptyState
 
 @Composable
 fun DownloadsScreen(
@@ -25,19 +27,33 @@ fun DownloadsScreen(
     viewModel: DownloadsViewModel = hiltViewModel()
 ) {
     val downloads = viewModel.downloads.collectAsState().value
+    val isLoading = viewModel.isLoading.collectAsState().value
     Scaffold(
         topBar = { TopAppBar(title = { Text("Downloads") }) },
         bottomBar = { MainNavigationBar(selectedTab, onTabSelected) }
     ) { padding ->
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
-            items(downloads) { item ->
-                Column(modifier = Modifier.padding(8.dp)) {
-                    Text(text = item.title)
-                    AsyncImage(model = item.thumbnailUrl, contentDescription = null)
-                    LinearProgressIndicator(progress = item.progress / 100f, modifier = Modifier.fillMaxSize())
-                    Text(text = item.status)
+        when {
+            isLoading -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(8) { ShimmeringStreamItem() }
+                }
+            }
+            downloads.isEmpty() -> {
+                EmptyState("Keine Downloads vorhanden.")
+            }
+            else -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(downloads) { item ->
+                        Column(modifier = Modifier.padding(8.dp)) {
+                            Text(text = item.title)
+                            AsyncImage(model = item.thumbnailUrl, contentDescription = null)
+                            LinearProgressIndicator(progress = item.progress / 100f, modifier = Modifier.fillMaxSize())
+                            Text(text = item.status)
+                        }
+                    }
                 }
             }
         }
     }
 }
+

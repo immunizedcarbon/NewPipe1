@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.schabi.newpipe.core.model.Stream
 import org.schabi.newpipe.core.ui.StreamItem
+import org.schabi.newpipe.core.ui.ShimmeringStreamItem
+import org.schabi.newpipe.core.ui.EmptyState
 import org.schabi.newpipe.core.ui.components.MainNavigationBar
 import org.schabi.newpipe.core.ui.components.MainTab
 
@@ -29,6 +31,7 @@ fun HistoryScreen(
     viewModel: HistoryViewModel = hiltViewModel()
 ) {
     val history = viewModel.history.collectAsState().value
+    val isLoading = viewModel.isLoading.collectAsState().value
     Scaffold(
         topBar = {
             TopAppBar(
@@ -42,10 +45,23 @@ fun HistoryScreen(
         },
         bottomBar = { MainNavigationBar(selectedTab, onTabSelected) }
     ) { padding ->
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
-            items(history) { stream ->
-                StreamItem(stream, onStreamSelected)
+        when {
+            isLoading -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(8) { ShimmeringStreamItem() }
+                }
+            }
+            history.isEmpty() -> {
+                EmptyState("Dein Verlauf ist leer.")
+            }
+            else -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(history) { stream ->
+                        StreamItem(stream, onStreamSelected)
+                    }
+                }
             }
         }
     }
 }
+

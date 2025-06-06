@@ -5,10 +5,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.schabi.newpipe.core.domain.usecase.GetFeedUseCase
 import org.schabi.newpipe.core.domain.usecase.RefreshFeedUseCase
@@ -16,15 +14,26 @@ import org.schabi.newpipe.core.model.Stream
 
 @HiltViewModel
 class FeedViewModel @Inject constructor(
-    getFeedUseCase: GetFeedUseCase,
+    private val getFeedUseCase: GetFeedUseCase,
     private val refreshFeedUseCase: RefreshFeedUseCase
 ) : ViewModel() {
-    val feed: StateFlow<List<Stream>> =
-        getFeedUseCase()
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+    private val _feed = MutableStateFlow<List<Stream>>(emptyList())
+    val feed: StateFlow<List<Stream>> = _feed.asStateFlow()
+
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            getFeedUseCase().collect { list ->
+                _feed.value = list
+                _isLoading.value = false
+            }
+        }
+    }
 
     fun refresh() {
         viewModelScope.launch {
@@ -34,3 +43,4 @@ class FeedViewModel @Inject constructor(
         }
     }
 }
+

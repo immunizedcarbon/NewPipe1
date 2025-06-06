@@ -24,6 +24,8 @@ import androidx.compose.foundation.clickable
 import org.schabi.newpipe.core.model.Channel
 import org.schabi.newpipe.core.ui.components.MainNavigationBar
 import org.schabi.newpipe.core.ui.components.MainTab
+import org.schabi.newpipe.core.ui.ShimmeringStreamItem
+import org.schabi.newpipe.core.ui.EmptyState
 
 @Composable
 fun SubscriptionsScreen(
@@ -34,6 +36,7 @@ fun SubscriptionsScreen(
     viewModel: SubscriptionsViewModel = hiltViewModel()
 ) {
     val subs = viewModel.subscriptions.collectAsState().value
+    val isLoading = viewModel.isLoading.collectAsState().value
     Scaffold(
         topBar = {
             TopAppBar(
@@ -47,9 +50,21 @@ fun SubscriptionsScreen(
         },
         bottomBar = { MainNavigationBar(selectedTab, onTabSelected) }
     ) { padding ->
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
-            items(subs) { channel ->
-                ChannelRow(channel) { onChannelSelected(channel) }
+        when {
+            isLoading -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(8) { ShimmeringStreamItem() }
+                }
+            }
+            subs.isEmpty() -> {
+                EmptyState("Keine Abos vorhanden.")
+            }
+            else -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(subs) { channel ->
+                        ChannelRow(channel) { onChannelSelected(channel) }
+                    }
+                }
             }
         }
     }
@@ -63,3 +78,4 @@ private fun ChannelRow(channel: Channel, onClick: () -> Unit) {
         Text(text = channel.name)
     }
 }
+

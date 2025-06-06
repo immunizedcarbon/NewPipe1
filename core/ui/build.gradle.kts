@@ -32,4 +32,5 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.2.0")
 }

@@ -14,7 +14,8 @@ import org.schabi.newpipe.core.model.Stream
 
 data class MainScreenUiState(
     val trendingStreams: List<Stream> = emptyList(),
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val error: Throwable? = null
 )
 
 @HiltViewModel
@@ -28,11 +29,12 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             getTrendingStreams().collect { result ->
                 result.onSuccess { streams ->
-                    _uiState.update { it.copy(trendingStreams = streams, isLoading = false) }
-                }.onFailure {
-                    _uiState.update { it.copy(isLoading = false) }
+                    _uiState.update { it.copy(trendingStreams = streams, isLoading = false, error = null) }
+                }.onFailure { throwable ->
+                    _uiState.update { it.copy(isLoading = false, error = throwable) }
                 }
             }
         }
     }
 }
+
