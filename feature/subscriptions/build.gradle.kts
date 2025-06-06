@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "org.schabi.newpipe.feature.subscriptions"
     defaultConfig { minSdk = 21 }
     compileOptions {
