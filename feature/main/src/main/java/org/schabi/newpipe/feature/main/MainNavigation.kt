@@ -16,11 +16,19 @@ import org.schabi.newpipe.feature.subscriptions.SubscriptionsScreen
 import org.schabi.newpipe.feature.playlists.PlaylistsScreen
 import org.schabi.newpipe.feature.search.SearchScreen
 import org.schabi.newpipe.feature.settings.SettingsScreen
+import org.schabi.newpipe.feature.feed.FeedScreen
 import org.schabi.newpipe.core.ui.components.MainTab
 
 @Composable
 fun MainNavHost(navController: NavHostController = rememberNavController()) {
-    NavHost(navController, startDestination = MainTab.Trends.route) {
+    NavHost(navController, startDestination = MainTab.Feed.route) {
+        composable(MainTab.Feed.route) {
+            FeedScreen(
+                selectedTab = MainTab.Feed,
+                onTabSelected = { tab -> if (tab != MainTab.Feed) navController.navigate(tab.route) },
+                onStreamSelected = { stream -> navController.navigate("player/${stream.url}") }
+            )
+        }
         composable(MainTab.Trends.route) {
             MainScreen(
                 onStreamSelected = { stream -> navController.navigate("player/${stream.url}") },
