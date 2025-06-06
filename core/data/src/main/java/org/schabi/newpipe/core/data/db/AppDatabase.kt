@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
 
-@Database(
+@Database(exportSchema = false,
     entities = [
         HistoryEntryEntity::class,
         SubscriptionEntity::class,
@@ -21,7 +21,7 @@ import androidx.room.migration.AutoMigrationSpec
         AutoMigration(from = 3, to = 4, spec = AppDatabase.Migration3To4::class),
         AutoMigration(from = 4, to = 5, spec = AppDatabase.Migration4To5::class)
     ],
-    exportSchema = true
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
