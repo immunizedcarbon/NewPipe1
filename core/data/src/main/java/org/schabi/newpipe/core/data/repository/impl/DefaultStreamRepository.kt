@@ -6,6 +6,7 @@ import org.schabi.newpipe.extractor.NewPipe
 import org.schabi.newpipe.extractor.kiosk.KioskInfo
 import org.schabi.newpipe.extractor.search.SearchInfo
 import org.schabi.newpipe.extractor.stream.StreamInfo
+import org.schabi.newpipe.extractor.channel.ChannelInfo
 
 class DefaultStreamRepository : StreamRepository {
     override suspend fun getStream(url: String): Stream {
@@ -45,6 +46,21 @@ class DefaultStreamRepository : StreamRepository {
         val kioskId = kioskList.defaultKioskId
         val url = kioskList.getListLinkHandlerFactoryByType(kioskId).fromId(kioskId).url
         val info = KioskInfo.getInfo(service, url)
+        return info.relatedItems.map { item ->
+            Stream(
+                url = item.url,
+                channelUrl = item.uploaderUrl,
+                title = item.name,
+                thumbnailUrl = item.thumbnailUrl,
+                duration = item.duration,
+                uploader = item.uploaderName
+            )
+        }
+    }
+
+    override suspend fun getStreamsForChannel(channelUrl: String): List<Stream> {
+        val service = NewPipe.getServiceByUrl(channelUrl)
+        val info = ChannelInfo.getInfo(service, channelUrl)
         return info.relatedItems.map { item ->
             Stream(
                 url = item.url,

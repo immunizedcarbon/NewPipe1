@@ -20,6 +20,7 @@ import coil.compose.AsyncImage
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.clickable
 import org.schabi.newpipe.core.model.Channel
 import org.schabi.newpipe.core.ui.components.MainNavigationBar
 import org.schabi.newpipe.core.ui.components.MainTab
@@ -29,6 +30,7 @@ fun SubscriptionsScreen(
     selectedTab: MainTab,
     onTabSelected: (MainTab) -> Unit,
     onSearchClicked: () -> Unit,
+    onChannelSelected: (Channel) -> Unit,
     viewModel: SubscriptionsViewModel = hiltViewModel()
 ) {
     val subs = viewModel.subscriptions.collectAsState().value
@@ -47,15 +49,15 @@ fun SubscriptionsScreen(
     ) { padding ->
         LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
             items(subs) { channel ->
-                ChannelRow(channel)
+                ChannelRow(channel) { onChannelSelected(channel) }
             }
         }
     }
 }
 
 @Composable
-private fun ChannelRow(channel: Channel) {
-    Row(modifier = Modifier.padding(8.dp)) {
+private fun ChannelRow(channel: Channel, onClick: () -> Unit) {
+    Row(modifier = Modifier.padding(8.dp).clickable(onClick = onClick)) {
         AsyncImage(model = channel.avatarUrl, contentDescription = null)
         Spacer(Modifier.width(8.dp))
         Text(text = channel.name)

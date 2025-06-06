@@ -14,6 +14,8 @@ import org.schabi.newpipe.NewPlayerActivity
 import org.schabi.newpipe.feature.history.HistoryScreen
 import org.schabi.newpipe.feature.subscriptions.SubscriptionsScreen
 import org.schabi.newpipe.feature.playlists.PlaylistsScreen
+import org.schabi.newpipe.feature.channel.ChannelScreen
+import org.schabi.newpipe.feature.playlist_detail.PlaylistDetailScreen
 import org.schabi.newpipe.feature.search.SearchScreen
 import org.schabi.newpipe.feature.settings.SettingsScreen
 import org.schabi.newpipe.feature.feed.FeedScreen
@@ -50,15 +52,29 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
             SubscriptionsScreen(
                 selectedTab = MainTab.Subscriptions,
                 onTabSelected = { tab -> if (tab != MainTab.Subscriptions) navController.navigate(tab.route) },
-                onSearchClicked = { navController.navigate("search") }
+                onSearchClicked = { navController.navigate("search") },
+                onChannelSelected = { channel -> navController.navigate("channel/${channel.url}") }
             )
         }
         composable(MainTab.Playlists.route) {
             PlaylistsScreen(
                 selectedTab = MainTab.Playlists,
                 onTabSelected = { tab -> if (tab != MainTab.Playlists) navController.navigate(tab.route) },
-                onSearchClicked = { navController.navigate("search") }
+                onSearchClicked = { navController.navigate("search") },
+                onPlaylistSelected = { playlist -> navController.navigate("playlist/${playlist.id}") }
             )
+        }
+        composable(
+            route = "channel/{channelUrl}",
+            arguments = listOf(navArgument("channelUrl") { type = NavType.StringType })
+        ) {
+            ChannelScreen(onStreamSelected = { stream -> navController.navigate("player/${stream.url}") })
+        }
+        composable(
+            route = "playlist/{playlistId}",
+            arguments = listOf(navArgument("playlistId") { type = NavType.LongType })
+        ) {
+            PlaylistDetailScreen(onStreamSelected = { stream -> navController.navigate("player/${stream.url}") })
         }
         composable("search") {
             SearchScreen(onStreamSelected = { stream -> navController.navigate("player/${stream.url}") })

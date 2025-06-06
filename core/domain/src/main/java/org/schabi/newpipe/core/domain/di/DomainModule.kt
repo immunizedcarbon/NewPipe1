@@ -13,6 +13,7 @@ import org.schabi.newpipe.core.domain.usecase.AddStreamToHistoryUseCase
 import org.schabi.newpipe.core.domain.usecase.GetSearchResultsUseCase
 import org.schabi.newpipe.core.domain.usecase.GetStreamDetailsUseCase
 import org.schabi.newpipe.core.domain.usecase.GetTrendingStreamsUseCase
+import org.schabi.newpipe.core.domain.usecase.GetChannelStreamsUseCase
 import org.schabi.newpipe.core.domain.usecase.GetWatchHistoryUseCase
 import org.schabi.newpipe.core.domain.usecase.SubscribeToChannelUseCase
 import org.schabi.newpipe.core.domain.usecase.GetSubscriptionsUseCase
@@ -36,6 +37,10 @@ object DomainModule {
     @Provides
     fun provideGetTrendingStreamsUseCase(repository: StreamRepository): GetTrendingStreamsUseCase =
         GetTrendingStreamsUseCase(repository)
+
+    @Provides
+    fun provideGetChannelStreamsUseCase(repository: StreamRepository): GetChannelStreamsUseCase =
+        GetChannelStreamsUseCase(repository)
 
     @Provides
     fun provideGetWatchHistoryUseCase(repository: HistoryRepository): GetWatchHistoryUseCase =
