@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import org.schabi.newpipe.core.data.repository.StreamRepository
 import org.schabi.newpipe.core.data.repository.HistoryRepository
 import org.schabi.newpipe.core.data.repository.SubscriptionRepository
+import org.schabi.newpipe.core.data.repository.PlaylistRepository
 import org.schabi.newpipe.core.domain.usecase.AddStreamToHistoryUseCase
 import org.schabi.newpipe.core.domain.usecase.GetSearchResultsUseCase
 import org.schabi.newpipe.core.domain.usecase.GetStreamDetailsUseCase
@@ -15,6 +16,12 @@ import org.schabi.newpipe.core.domain.usecase.GetWatchHistoryUseCase
 import org.schabi.newpipe.core.domain.usecase.SubscribeToChannelUseCase
 import org.schabi.newpipe.core.domain.usecase.GetSubscriptionsUseCase
 import org.schabi.newpipe.core.domain.usecase.UnsubscribeFromChannelUseCase
+import org.schabi.newpipe.core.domain.usecase.CreatePlaylistUseCase
+import org.schabi.newpipe.core.domain.usecase.GetPlaylistsUseCase
+import org.schabi.newpipe.core.domain.usecase.AddStreamToPlaylistUseCase
+import org.schabi.newpipe.core.domain.usecase.GetPlaylistItemsUseCase
+import org.schabi.newpipe.core.domain.usecase.RemoveStreamFromPlaylistUseCase
+import org.schabi.newpipe.core.domain.usecase.DeletePlaylistUseCase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -50,4 +57,28 @@ object DomainModule {
     @Provides
     fun provideUnsubscribeFromChannelUseCase(repository: SubscriptionRepository): UnsubscribeFromChannelUseCase =
         UnsubscribeFromChannelUseCase(repository)
+
+    @Provides
+    fun provideCreatePlaylistUseCase(repository: PlaylistRepository): CreatePlaylistUseCase =
+        CreatePlaylistUseCase(repository)
+
+    @Provides
+    fun provideGetPlaylistsUseCase(repository: PlaylistRepository): GetPlaylistsUseCase =
+        GetPlaylistsUseCase(repository)
+
+    @Provides
+    fun provideAddStreamToPlaylistUseCase(repository: PlaylistRepository): AddStreamToPlaylistUseCase =
+        AddStreamToPlaylistUseCase(repository)
+
+    @Provides
+    fun provideGetPlaylistItemsUseCase(repository: PlaylistRepository): GetPlaylistItemsUseCase =
+        GetPlaylistItemsUseCase(repository)
+
+    @Provides
+    fun provideRemoveStreamFromPlaylistUseCase(repository: PlaylistRepository): RemoveStreamFromPlaylistUseCase =
+        RemoveStreamFromPlaylistUseCase(repository)
+
+    @Provides
+    fun provideDeletePlaylistUseCase(repository: PlaylistRepository): DeletePlaylistUseCase =
+        DeletePlaylistUseCase(repository)
 }

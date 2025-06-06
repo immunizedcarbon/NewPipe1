@@ -13,6 +13,7 @@ import androidx.navigation.NavType
 import org.schabi.newpipe.NewPlayerActivity
 import org.schabi.newpipe.feature.history.HistoryScreen
 import org.schabi.newpipe.feature.subscriptions.SubscriptionsScreen
+import org.schabi.newpipe.feature.playlists.PlaylistsScreen
 import org.schabi.newpipe.feature.search.SearchScreen
 import org.schabi.newpipe.core.ui.components.MainTab
 
@@ -39,6 +40,13 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
             SubscriptionsScreen(
                 selectedTab = MainTab.Subscriptions,
                 onTabSelected = { tab -> if (tab != MainTab.Subscriptions) navController.navigate(tab.route) },
+                onSearchClicked = { navController.navigate("search") }
+            )
+        }
+        composable(MainTab.Playlists.route) {
+            PlaylistsScreen(
+                selectedTab = MainTab.Playlists,
+                onTabSelected = { tab -> if (tab != MainTab.Playlists) navController.navigate(tab.route) },
                 onSearchClicked = { navController.navigate("search") }
             )
         }

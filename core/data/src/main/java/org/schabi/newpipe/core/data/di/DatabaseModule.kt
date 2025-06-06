@@ -11,6 +11,7 @@ import javax.inject.Singleton
 import org.schabi.newpipe.core.data.db.AppDatabase
 import org.schabi.newpipe.core.data.db.HistoryDao
 import org.schabi.newpipe.core.data.db.SubscriptionDao
+import org.schabi.newpipe.core.data.db.PlaylistDao
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -25,4 +26,7 @@ object DatabaseModule {
 
     @Provides
     fun provideSubscriptionDao(db: AppDatabase): SubscriptionDao = db.subscriptionDao()
+
+    @Provides
+    fun providePlaylistDao(db: AppDatabase): PlaylistDao = db.playlistDao()
 }
