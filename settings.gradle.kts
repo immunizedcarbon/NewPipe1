@@ -1,3 +1,11 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
 include(":app")
 include(":core:ui")
 include(":core:data")
