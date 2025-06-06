@@ -88,7 +88,9 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.0") // [Update 2025-06-06: von 2.7.7]
     // Hilt Navigation Compose
 implementation("androidx.hilt:hilt-navigation-compose:1.3.0-alpha01")
-    implementation("com.nononsenseapps:filepicker:4.2.2")
+    implementation("com.nononsenseapps:filepicker:4.2.1") {
+        exclude(group = "com.android.support", module = "support-compat")
+    }
 
     implementation(project(":core:ui"))
     implementation(project(":core:domain"))
