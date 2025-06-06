@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import androidx.room.ForeignKey.CASCADE
 
 @Entity(
     tableName = "playlist_items",
@@ -13,7 +12,7 @@ import androidx.room.ForeignKey.CASCADE
             entity = PlaylistEntity::class,
             parentColumns = ["id"],
             childColumns = ["playlistId"],
-            onDelete = CASCADE
+            onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [Index("playlistId")]
