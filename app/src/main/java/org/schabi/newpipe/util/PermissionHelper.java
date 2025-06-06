@@ -16,7 +16,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import org.schabi.newpipe.R;
-import org.schabi.newpipe.settings.NewPipeSettings;
 
 public final class PermissionHelper {
     public static final int POST_NOTIFICATIONS_REQUEST_CODE = 779;
@@ -26,9 +25,6 @@ public final class PermissionHelper {
     private PermissionHelper() { }
 
     public static boolean checkStoragePermissions(final Activity activity, final int requestCode) {
-        if (NewPipeSettings.useStorageAccessFramework(activity)) {
-            return true; // Storage permissions are not needed for SAF
-        }
 
         if (!checkReadStoragePermissions(activity, requestCode)) {
             return false;
