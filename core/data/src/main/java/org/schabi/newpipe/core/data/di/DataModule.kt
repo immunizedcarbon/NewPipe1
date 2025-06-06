@@ -9,11 +9,13 @@ import org.schabi.newpipe.core.data.repository.PlaylistRepository
 import org.schabi.newpipe.core.data.repository.FeedRepository
 import org.schabi.newpipe.core.data.repository.StreamRepository
 import org.schabi.newpipe.core.data.repository.SubscriptionRepository
+import org.schabi.newpipe.core.data.repository.DownloadRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultHistoryRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultPlaylistRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultStreamRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultSubscriptionRepository
 import org.schabi.newpipe.core.data.repository.impl.DefaultFeedRepository
+import org.schabi.newpipe.core.data.repository.impl.DefaultDownloadRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -32,4 +34,7 @@ abstract class DataModule {
 
     @Binds
     abstract fun bindFeedRepository(impl: DefaultFeedRepository): FeedRepository
+
+    @Binds
+    abstract fun bindDownloadRepository(impl: DefaultDownloadRepository): DownloadRepository
 }

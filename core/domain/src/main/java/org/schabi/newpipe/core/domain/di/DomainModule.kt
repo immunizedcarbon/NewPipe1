@@ -9,6 +9,7 @@ import org.schabi.newpipe.core.data.repository.HistoryRepository
 import org.schabi.newpipe.core.data.repository.SubscriptionRepository
 import org.schabi.newpipe.core.data.repository.PlaylistRepository
 import org.schabi.newpipe.core.data.repository.FeedRepository
+import org.schabi.newpipe.core.data.repository.DownloadRepository
 import org.schabi.newpipe.core.domain.usecase.AddStreamToHistoryUseCase
 import org.schabi.newpipe.core.domain.usecase.GetSearchResultsUseCase
 import org.schabi.newpipe.core.domain.usecase.GetStreamDetailsUseCase
@@ -26,6 +27,7 @@ import org.schabi.newpipe.core.domain.usecase.RemoveStreamFromPlaylistUseCase
 import org.schabi.newpipe.core.domain.usecase.DeletePlaylistUseCase
 import org.schabi.newpipe.core.domain.usecase.GetFeedUseCase
 import org.schabi.newpipe.core.domain.usecase.RefreshFeedUseCase
+import org.schabi.newpipe.core.domain.usecase.GetDownloadsUseCase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -97,4 +99,8 @@ object DomainModule {
     @Provides
     fun provideRefreshFeedUseCase(repository: FeedRepository): RefreshFeedUseCase =
         RefreshFeedUseCase(repository)
+
+    @Provides
+    fun provideGetDownloadsUseCase(repository: DownloadRepository): GetDownloadsUseCase =
+        GetDownloadsUseCase(repository)
 }
