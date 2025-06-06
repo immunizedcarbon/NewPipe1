@@ -23,7 +23,7 @@
 - Coil: 2.6.0 → 2.8.0
 
 ## Quality Tools
-- Detekt: 1.23.6 → 1.24.0
+- Detekt: 1.23.6 → 1.23.8
 - SonarQube: 4.0.0.2929 → 4.2.0
 
 ## Breaking Changes
