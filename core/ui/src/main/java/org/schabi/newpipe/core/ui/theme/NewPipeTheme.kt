@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 fun NewPipeTheme(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val colorScheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        if (MaterialTheme.colorScheme.isLight) {
+        if (MaterialTheme.colorScheme.isLight()) {
             dynamicLightColorScheme(context)
         } else {
             dynamicDarkColorScheme(context)

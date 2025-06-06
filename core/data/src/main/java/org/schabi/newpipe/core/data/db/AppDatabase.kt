@@ -20,7 +20,8 @@ import androidx.room.migration.AutoMigrationSpec
         AutoMigration(from = 2, to = 3, spec = AppDatabase.Migration2To3::class),
         AutoMigration(from = 3, to = 4, spec = AppDatabase.Migration3To4::class),
         AutoMigration(from = 4, to = 5, spec = AppDatabase.Migration4To5::class)
-    ]
+    ],
+    exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
