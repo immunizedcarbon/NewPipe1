@@ -65,7 +65,7 @@ dependencies {
     implementation("com.github.TeamNewPipe.NewPipeExtractor:NewPipeExtractor:v0.24.6")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
 
-    implementation("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.core:core-ktx:1.16.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.11.0")
 
