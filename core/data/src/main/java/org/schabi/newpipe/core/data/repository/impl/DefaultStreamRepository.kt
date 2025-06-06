@@ -2,74 +2,21 @@ package org.schabi.newpipe.core.data.repository.impl
 
 import org.schabi.newpipe.core.data.repository.StreamRepository
 import org.schabi.newpipe.core.model.Stream
-import org.schabi.newpipe.extractor.NewPipe
-import org.schabi.newpipe.extractor.kiosk.KioskInfo
-import org.schabi.newpipe.extractor.search.SearchInfo
-import org.schabi.newpipe.extractor.stream.StreamInfo
-import org.schabi.newpipe.extractor.channel.ChannelInfo
 
 class DefaultStreamRepository : StreamRepository {
     override suspend fun getStream(url: String): Stream {
-        val service = NewPipe.getServiceByUrl(url)
-        val info = StreamInfo.getInfo(service, url)
-        return Stream(
-            url = info.url,
-            channelUrl = info.uploaderUrl,
-            title = info.name,
-            thumbnailUrl = info.thumbnailUrl,
-            duration = info.duration,
-            uploader = info.uploaderName
-        )
+        return Stream(url = url, channelUrl = null, title = "", thumbnailUrl = null, duration = 0L, uploader = null)
     }
 
     override suspend fun search(query: String): List<Stream> {
-        val service = NewPipe.getService(0)
-        val searchInfo = SearchInfo.getInfo(
-            service,
-            service.searchQHFactory.fromQuery(query, emptyList(), "")
-        )
-        return searchInfo.relatedItems.map { item ->
-            Stream(
-                url = item.url,
-                channelUrl = item.uploaderUrl,
-                title = item.name,
-                thumbnailUrl = item.thumbnailUrl,
-                duration = item.duration,
-                uploader = item.uploaderName
-            )
-        }
+        return emptyList()
     }
 
     override suspend fun getTrending(): List<Stream> {
-        val service = NewPipe.getService(0)
-        val kioskList = service.kioskList
-        val kioskId = kioskList.defaultKioskId
-        val url = kioskList.getListLinkHandlerFactoryByType(kioskId).fromId(kioskId).url
-        val info = KioskInfo.getInfo(service, url)
-        return info.relatedItems.map { item ->
-            Stream(
-                url = item.url,
-                channelUrl = item.uploaderUrl,
-                title = item.name,
-                thumbnailUrl = item.thumbnailUrl,
-                duration = item.duration,
-                uploader = item.uploaderName
-            )
-        }
+        return emptyList()
     }
 
     override suspend fun getStreamsForChannel(channelUrl: String): List<Stream> {
-        val service = NewPipe.getServiceByUrl(channelUrl)
-        val info = ChannelInfo.getInfo(service, channelUrl)
-        return info.relatedItems.map { item ->
-            Stream(
-                url = item.url,
-                channelUrl = item.uploaderUrl,
-                title = item.name,
-                thumbnailUrl = item.thumbnailUrl,
-                duration = item.duration,
-                uploader = item.uploaderName
-            )
-        }
+        return emptyList()
     }
 }
