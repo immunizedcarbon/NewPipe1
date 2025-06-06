@@ -1,7 +1,4 @@
-<h3 align="center">We are planning to <i>rewrite</i> large chunks of the codebase, to bring about <a href="https://github.com/TeamNewPipe/NewPipe/discussions/10118">a new, modern and stable NewPipe</a>!</h3>
-<h4 align="center">Please do <b>not</b> open pull requests for <i>new features</i> now, only bugfix PRs will be accepted.</h4>
-
-<p align="center"><a href="https://newpipe.net"><img src="assets/new_pipe_icon_5.png" width="150"></a></p> 
+<p align="center"><a href="https://newpipe.net"><img src="assets/new_pipe_icon_5.png" width="150"></a></p>
 <h2 align="center"><b>NewPipe</b></h2>
 <h4 align="center">A libre lightweight streaming front-end for Android.</h4>
 
@@ -75,6 +72,10 @@ NewPipe works by fetching the required data from the official API (e.g. PeerTube
 
 Also, since they are free and open source software, neither the app nor the Extractor use any proprietary libraries or frameworks, such as Google Play Services. This means you can use NewPipe on devices or custom ROMs that do not have Google apps installed.
 
+## Architecture
+
+NewPipe is split into multiple Gradle modules. The `:app` module contains the Android application. Shared logic lives under `:core:*` while individual screens are implemented in `:feature:*` modules. The project is written in Kotlin using the Gradle Kotlin DSL and leverages modern Android libraries like Jetpack Compose for UI, Kotlin Coroutines for asynchronous work, Room for local storage, Hilt for dependency injection and WorkManager for background tasks.
+
 ### Features
 
 * Watch videos at resolutions up to 4K
@@ -123,7 +124,7 @@ sdk.dir=/path/to/Android/sdk
 ```
 
 You can alternatively set the `ANDROID_HOME` environment variable.
-Once configured, run:
+Once configured, build the debug APK using Gradle's Kotlin DSL:
 
 ```bash
 ./gradlew assembleDebug
