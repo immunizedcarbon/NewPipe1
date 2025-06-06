@@ -18,13 +18,8 @@ buildscript {
     }
 }
 
+
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://jitpack.io")
-        maven("https://repo.clojars.org")
-    }
     extra["kotlin_version"] = "2.1.20" // [Update 2025-06-06: von 2.1.21]
     extra["hilt_version"] = "2.56.2" // [Update 2025-06-06: von 2.48]
     extra["compose_bom_version"] = "2025.05.00" // [Update 2025-06-06: von 2024.02.02]
