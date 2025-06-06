@@ -15,9 +15,6 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     buildFeatures { compose = true }
-    composeOptions {
-        kotlinCompilerExtensionVersion = rootProject.extra["compose_compiler_version"] as String
-    }
 }
 
 dependencies {
@@ -27,7 +24,7 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.3.0") // [Update 2025-06-06: von 1.2.0]
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
     kapt("com.google.dagger:hilt-compiler:${rootProject.extra["hilt_version"]}")
 }
