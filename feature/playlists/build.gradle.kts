@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk = 36
+    compileSdk = 34
     namespace = "org.schabi.newpipe.feature.playlists"
     defaultConfig { minSdk = 21 }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk = 36
+    compileSdk = 34
     namespace = "org.schabi.newpipe.feature.channel"
     defaultConfig { minSdk = 21 }
     compileOptions {
