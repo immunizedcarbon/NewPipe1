@@ -15,7 +15,7 @@ android {
 dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:data"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
     kapt("com.google.dagger:hilt-compiler:${rootProject.extra["hilt_version"]}")
 }
