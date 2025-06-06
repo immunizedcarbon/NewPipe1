@@ -11,27 +11,39 @@ import kotlinx.coroutines.launch
 import org.schabi.newpipe.core.domain.usecase.GetStreamDetailsUseCase
 import org.schabi.newpipe.core.domain.usecase.AddStreamToHistoryUseCase
 import org.schabi.newpipe.core.domain.usecase.SubscribeToChannelUseCase
+import org.schabi.newpipe.core.domain.usecase.GetPlaylistsUseCase
+import org.schabi.newpipe.core.domain.usecase.AddStreamToPlaylistUseCase
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import org.schabi.newpipe.core.model.Channel
+import org.schabi.newpipe.core.model.LocalPlaylist
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
     private val player: ExoPlayer,
     private val getStreamDetails: GetStreamDetailsUseCase,
     private val addStreamToHistory: AddStreamToHistoryUseCase,
-    private val subscribeToChannel: SubscribeToChannelUseCase
+    private val subscribeToChannel: SubscribeToChannelUseCase,
+    getPlaylists: GetPlaylistsUseCase,
+    private val addStreamToPlaylist: AddStreamToPlaylistUseCase
 ) : ViewModel() {
+    val playlists: StateFlow<List<LocalPlaylist>> =
+        getPlaylists().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     private var currentChannel: Channel? = null
+    private var currentStream: org.schabi.newpipe.core.model.Stream? = null
 
     fun prepare(url: String) {
         viewModelScope.launch {
             val result = getStreamDetails(url).first()
-            result.onSuccess {
-                player.setMediaItem(MediaItem.fromUri(it.url))
-                addStreamToHistory(it)
+            result.onSuccess { stream ->
+                currentStream = stream
+                player.setMediaItem(MediaItem.fromUri(stream.url))
+                addStreamToHistory(stream)
                 currentChannel = Channel(
-                    url = it.channelUrl ?: it.uploader ?: it.url,
-                    name = it.uploader ?: "",
+                    url = stream.channelUrl ?: stream.uploader ?: stream.url,
+                    name = stream.uploader ?: "",
                     avatarUrl = null
                 )
                 player.prepare()
@@ -53,5 +65,10 @@ class PlayerViewModel @Inject constructor(
     fun subscribeToCurrentChannel() {
         val channel = currentChannel ?: return
         viewModelScope.launch { subscribeToChannel(channel) }
+    }
+
+    fun addCurrentStreamToPlaylist(id: Long) {
+        val stream = currentStream ?: return
+        viewModelScope.launch { addStreamToPlaylist(id, stream) }
     }
 }

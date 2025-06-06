@@ -4,6 +4,7 @@ include(":core:data")
 include(":core:model")
 include(":core:domain")
 include(":feature:player")
+include(":feature:feed")
 include(":feature:main")
 include(":feature:history")
 

@@ -12,6 +12,7 @@ import org.schabi.newpipe.core.data.db.AppDatabase
 import org.schabi.newpipe.core.data.db.HistoryDao
 import org.schabi.newpipe.core.data.db.SubscriptionDao
 import org.schabi.newpipe.core.data.db.PlaylistDao
+import org.schabi.newpipe.core.data.db.FeedDao
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,4 +30,7 @@ object DatabaseModule {
 
     @Provides
     fun providePlaylistDao(db: AppDatabase): PlaylistDao = db.playlistDao()
+
+    @Provides
+    fun provideFeedDao(db: AppDatabase): FeedDao = db.feedDao()
 }
