@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "org.schabi.newpipe"
 
     defaultConfig {
@@ -63,15 +63,16 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
 
     implementation("androidx.core:core-ktx:1.13.0") // [Update 2025-06-06: von 1.12.0]
+    implementation("androidx.preference:preference-ktx:1.2.1")
     // AppCompat
     // Alt: implementation("androidx.appcompat:appcompat:1.11.0")
     implementation("androidx.appcompat:appcompat:1.1.0") // [Update 2025-06-06: von 1.11.0]
     implementation("com.google.android.material:material:1.12.0") // [Update 2025-06-06: von 1.11.0]
 
     // Room (einheitlich auf 2.7.1 setzen)
-    // Alt: implementation("androidx.room:room-runtime:2.8.0")
+    // Alt: implementation("androidx.room:room-runtime:2.7.1")
     implementation("androidx.room:room-runtime:2.7.1")
-    // Alt: implementation("androidx.room:room-ktx:2.8.0")
+    // Alt: implementation("androidx.room:room-ktx:2.7.1")
     implementation("androidx.room:room-ktx:2.7.1")
     kapt("androidx.room:room-compiler:2.7.1")
 
@@ -86,8 +87,8 @@ dependencies {
     // Alt: implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.navigation:navigation-compose:2.9.0") // [Update 2025-06-06: von 2.7.7]
     // Hilt Navigation Compose
-    // Alt: implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // [Update 2025-06-06: von 1.3.0]
+implementation("androidx.hilt:hilt-navigation-compose:1.3.0-alpha01")
+    implementation("com.nononsenseapps:filepicker:4.2.1")
 
     implementation(project(":core:ui"))
     implementation(project(":core:domain"))

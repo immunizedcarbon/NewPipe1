@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "org.schabi.newpipe.feature.main"
     defaultConfig { minSdk = 21 }
     compileOptions {
@@ -31,7 +31,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.navigation:navigation-compose:2.8.0") // [Update 2025-06-06: von 2.7.7]
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // [Update 2025-06-06: von 1.2.0]
+    implementation("androidx.hilt:hilt-navigation-compose:1.3.0-alpha01") // [Update 2025-06-06: von 1.2.0]
     implementation("com.google.dagger:hilt-android:${rootProject.extra["hilt_version"]}")
     kapt("com.google.dagger:hilt-compiler:${rootProject.extra["hilt_version"]}")
 }
