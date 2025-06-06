@@ -7,7 +7,7 @@ plugins {
     kotlin("kapt")
     id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
-    id("org.sonarqube") version "4.2.0" // [Update 2025-06-06: von 4.0.0.2929]
+    id("org.sonarqube") version "6.2.0.5505" // [Update 2025-06-06: von 4.0.0.2929]
 }
 
 android {
