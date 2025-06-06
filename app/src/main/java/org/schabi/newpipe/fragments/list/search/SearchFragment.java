@@ -9,7 +9,6 @@ import static java.util.Arrays.asList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -36,7 +35,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.TooltipCompat;
 import androidx.collection.SparseArrayCompat;
 import androidx.core.text.HtmlCompat;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +61,6 @@ import org.schabi.newpipe.fragments.list.BaseListFragment;
 import org.schabi.newpipe.ktx.AnimationType;
 import org.schabi.newpipe.ktx.ExceptionUtils;
 import org.schabi.newpipe.local.history.HistoryRecordManager;
-import org.schabi.newpipe.settings.NewPipeSettings;
 import org.schabi.newpipe.util.Constants;
 import org.schabi.newpipe.util.DeviceUtils;
 import org.schabi.newpipe.util.ExtractorHelper;
@@ -201,9 +198,8 @@ public class SearchFragment extends BaseListFragment<SearchInfo, ListExtractor.I
     public void onAttach(@NonNull final Context context) {
         super.onAttach(context);
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-        showLocalSuggestions = NewPipeSettings.showLocalSearchSuggestions(activity, prefs);
-        showRemoteSuggestions = NewPipeSettings.showRemoteSearchSuggestions(activity, prefs);
+        showLocalSuggestions = true;
+        showRemoteSuggestions = true;
 
         suggestionListAdapter = new SuggestionListAdapter();
         historyRecordManager = new HistoryRecordManager(context);

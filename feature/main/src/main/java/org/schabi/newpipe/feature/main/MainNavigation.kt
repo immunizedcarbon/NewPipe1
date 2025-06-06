@@ -15,6 +15,7 @@ import org.schabi.newpipe.feature.history.HistoryScreen
 import org.schabi.newpipe.feature.subscriptions.SubscriptionsScreen
 import org.schabi.newpipe.feature.playlists.PlaylistsScreen
 import org.schabi.newpipe.feature.search.SearchScreen
+import org.schabi.newpipe.feature.settings.SettingsScreen
 import org.schabi.newpipe.core.ui.components.MainTab
 
 @Composable
@@ -25,7 +26,8 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
                 onStreamSelected = { stream -> navController.navigate("player/${stream.url}") },
                 selectedTab = MainTab.Trends,
                 onTabSelected = { tab -> if (tab != MainTab.Trends) navController.navigate(tab.route) },
-                onSearchClicked = { navController.navigate("search") }
+                onSearchClicked = { navController.navigate("search") },
+                onSettingsClicked = { navController.navigate("settings") }
             )
         }
         composable(MainTab.History.route) {
@@ -53,6 +55,7 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
         composable("search") {
             SearchScreen(onStreamSelected = { stream -> navController.navigate("player/${stream.url}") })
         }
+        composable("settings") { SettingsScreen() }
         composable(
             route = "player/{url}",
             arguments = listOf(navArgument("url") { type = NavType.StringType })

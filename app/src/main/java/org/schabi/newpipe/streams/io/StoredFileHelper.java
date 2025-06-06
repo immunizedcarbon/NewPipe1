@@ -16,7 +16,6 @@ import androidx.documentfile.provider.DocumentFile;
 import com.nononsenseapps.filepicker.Utils;
 
 import org.schabi.newpipe.MainActivity;
-import org.schabi.newpipe.settings.NewPipeSettings;
 import org.schabi.newpipe.util.FilePickerActivityHelper;
 
 import java.io.File;
@@ -483,21 +482,12 @@ public class StoredFileHelper implements Serializable {
 
     public static Intent getPicker(@NonNull final Context ctx,
                                    @NonNull final String mimeType) {
-        if (NewPipeSettings.useStorageAccessFramework(ctx)) {
-            return new Intent(Intent.ACTION_OPEN_DOCUMENT)
-                    .putExtra("android.content.extra.SHOW_ADVANCED", true)
-                    .setType(mimeType)
-                    .addCategory(Intent.CATEGORY_OPENABLE)
-                    .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-                            | StoredDirectoryHelper.PERMISSION_FLAGS);
-        } else {
-            return new Intent(ctx, FilePickerActivityHelper.class)
-                    .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_MULTIPLE, false)
-                    .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_CREATE_DIR, true)
-                    .putExtra(FilePickerActivityHelper.EXTRA_SINGLE_CLICK, true)
-                    .putExtra(FilePickerActivityHelper.EXTRA_MODE,
-                            FilePickerActivityHelper.MODE_FILE);
-        }
+        return new Intent(ctx, FilePickerActivityHelper.class)
+                .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_MULTIPLE, false)
+                .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_CREATE_DIR, true)
+                .putExtra(FilePickerActivityHelper.EXTRA_SINGLE_CLICK, true)
+                .putExtra(FilePickerActivityHelper.EXTRA_MODE,
+                        FilePickerActivityHelper.MODE_FILE);
     }
 
     public static Intent getPicker(@NonNull final Context ctx,
@@ -510,24 +500,14 @@ public class StoredFileHelper implements Serializable {
                                       @Nullable final String filename,
                                       @NonNull final String mimeType,
                                       @Nullable final Uri initialPath) {
-        final Intent i;
-        if (NewPipeSettings.useStorageAccessFramework(ctx)) {
-            i = new Intent(Intent.ACTION_CREATE_DOCUMENT)
-                    .putExtra("android.content.extra.SHOW_ADVANCED", true)
-                    .setType(mimeType)
-                    .addCategory(Intent.CATEGORY_OPENABLE)
-                    .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION
-                            | StoredDirectoryHelper.PERMISSION_FLAGS);
-            if (filename != null) {
-                i.putExtra(Intent.EXTRA_TITLE, filename);
-            }
-        } else {
-            i = new Intent(ctx, FilePickerActivityHelper.class)
-                    .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_MULTIPLE, false)
-                    .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_CREATE_DIR, true)
-                    .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_EXISTING_FILE, true)
-                    .putExtra(FilePickerActivityHelper.EXTRA_MODE,
-                            FilePickerActivityHelper.MODE_NEW_FILE);
+        final Intent i = new Intent(ctx, FilePickerActivityHelper.class)
+                .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_MULTIPLE, false)
+                .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_CREATE_DIR, true)
+                .putExtra(FilePickerActivityHelper.EXTRA_ALLOW_EXISTING_FILE, true)
+                .putExtra(FilePickerActivityHelper.EXTRA_MODE,
+                        FilePickerActivityHelper.MODE_NEW_FILE);
+        if (filename != null) {
+            i.putExtra(Intent.EXTRA_TITLE, filename);
         }
         return applyInitialPathToPickerIntent(ctx, i, initialPath, filename);
     }
@@ -537,21 +517,9 @@ public class StoredFileHelper implements Serializable {
                                                          @Nullable final Uri initialPath,
                                                          @Nullable final String filename) {
 
-        if (NewPipeSettings.useStorageAccessFramework(ctx)) {
-            if (initialPath == null) {
-                return intent; // nothing to do, no initial path provided
-            }
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                return intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, initialPath);
-            } else {
-                return intent; // can't set initial path on API < 26
-            }
-
-        } else {
-            if (initialPath == null && filename == null) {
-                return intent; // nothing to do, no initial path and no file name provided
-            }
+        if (initialPath == null && filename == null) {
+            return intent; // nothing to do, no initial path and no file name provided
+        }
 
             File file;
             if (initialPath == null) {
@@ -583,8 +551,7 @@ public class StoredFileHelper implements Serializable {
                 file = new File(file, filename);
             }
 
-            return intent
-                    .putExtra(FilePickerActivityHelper.EXTRA_START_PATH, file.getAbsolutePath());
-        }
+        return intent
+                .putExtra(FilePickerActivityHelper.EXTRA_START_PATH, file.getAbsolutePath());
     }
 }

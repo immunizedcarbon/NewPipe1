@@ -57,7 +57,6 @@ import org.schabi.newpipe.extractor.stream.Stream;
 import org.schabi.newpipe.extractor.stream.StreamInfo;
 import org.schabi.newpipe.extractor.stream.SubtitlesStream;
 import org.schabi.newpipe.extractor.stream.VideoStream;
-import org.schabi.newpipe.settings.NewPipeSettings;
 import org.schabi.newpipe.streams.io.NoFileManagerSafeGuard;
 import org.schabi.newpipe.streams.io.StoredDirectoryHelper;
 import org.schabi.newpipe.streams.io.StoredFileHelper;
@@ -818,9 +817,7 @@ public class DownloadDialog extends DialogFragment
                 throw new RuntimeException("No stream selected");
         }
 
-        if (!askForSavePath && (mainStorage == null
-                || mainStorage.isDirect() == NewPipeSettings.useStorageAccessFramework(context)
-                || mainStorage.isInvalidSafStorage())) {
+        if (!askForSavePath && (mainStorage == null || mainStorage.isInvalidSafStorage())) {
             // Pick new download folder if one of:
             // - Download folder is not set
             // - Download folder uses SAF while SAF is disabled
@@ -839,18 +836,7 @@ public class DownloadDialog extends DialogFragment
         }
 
         if (askForSavePath) {
-            final Uri initialPath;
-            if (NewPipeSettings.useStorageAccessFramework(context)) {
-                initialPath = null;
-            } else {
-                final File initialSavePath;
-                if (dialogBinding.videoAudioGroup.getCheckedRadioButtonId() == R.id.audio_button) {
-                    initialSavePath = NewPipeSettings.getDir(Environment.DIRECTORY_MUSIC);
-                } else {
-                    initialSavePath = NewPipeSettings.getDir(Environment.DIRECTORY_MOVIES);
-                }
-                initialPath = Uri.parse(initialSavePath.getAbsolutePath());
-            }
+            final Uri initialPath = null;
 
             NoFileManagerSafeGuard.launchSafe(requestDownloadSaveAsLauncher,
                     StoredFileHelper.getNewPicker(context, filenameTmp, mimeTmp, initialPath), TAG,
