@@ -28,7 +28,7 @@ allprojects {
     extra["kotlin_version"] = "2.1.21"
     extra["hilt_version"] = "2.48"
     extra["compose_compiler_version"] = "1.5.10"
-    extra["compose_bom_version"] = "2025.05.00"
+    extra["compose_bom_version"] = "2024.02.02"
 }
 
 subprojects {
