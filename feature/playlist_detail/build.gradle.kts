@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk = 34
+    compileSdk = 35
     namespace = "org.schabi.newpipe.feature.playlist_detail"
     defaultConfig { minSdk = 21 }
     compileOptions {
