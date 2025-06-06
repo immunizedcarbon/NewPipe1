@@ -1,5 +1,9 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+plugins {
+    id("io.gitlab.arturbosch.detekt") version "1.23.6" apply false
+}
+
 buildscript {
     repositories {
         google()
@@ -25,4 +29,13 @@ allprojects {
     extra["hilt_version"] = "2.51"
     extra["compose_compiler_version"] = "1.5.10"
     extra["compose_bom_version"] = "2025.06.01"
+}
+
+subprojects {
+    plugins.withId("org.jetbrains.kotlin.jvm") {
+        apply(plugin = "io.gitlab.arturbosch.detekt")
+    }
+    plugins.withId("org.jetbrains.kotlin.android") {
+        apply(plugin = "io.gitlab.arturbosch.detekt")
+    }
 }

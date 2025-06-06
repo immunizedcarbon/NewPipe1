@@ -1,4 +1,5 @@
 plugins {
+    id("org.jetbrains.kotlin.plugin.compose") version "2.1.21"
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
