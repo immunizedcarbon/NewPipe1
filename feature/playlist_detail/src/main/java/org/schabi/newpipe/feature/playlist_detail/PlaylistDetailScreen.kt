@@ -13,6 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.schabi.newpipe.core.model.Stream
 import org.schabi.newpipe.core.ui.StreamItem
+import org.schabi.newpipe.core.ui.ShimmeringStreamItem
+import org.schabi.newpipe.core.ui.EmptyState
 
 @Composable
 fun PlaylistDetailScreen(
@@ -21,18 +23,34 @@ fun PlaylistDetailScreen(
 ) {
     val streams = viewModel.streams.collectAsState().value
     val name = viewModel.playlistName.collectAsState().value
+    val isLoading = viewModel.isLoading.collectAsState().value
 
     Scaffold(
         topBar = { TopAppBar(title = { Text(name) }) }
     ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            items(streams) { stream ->
-                StreamItem(stream, onStreamSelected)
+        when {
+            isLoading -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) { items(8) { ShimmeringStreamItem() } }
+            }
+            streams.isEmpty() -> {
+                EmptyState("Playlist ist leer.")
+            }
+            else -> {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                ) {
+                    items(streams) { stream ->
+                        StreamItem(stream, onStreamSelected)
+                    }
+                }
             }
         }
     }
 }
+

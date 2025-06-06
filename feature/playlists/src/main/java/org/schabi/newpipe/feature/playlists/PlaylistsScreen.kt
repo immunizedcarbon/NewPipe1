@@ -28,6 +28,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import org.schabi.newpipe.core.ui.components.MainNavigationBar
 import org.schabi.newpipe.core.ui.components.MainTab
 import org.schabi.newpipe.core.model.LocalPlaylist
+import org.schabi.newpipe.core.ui.ShimmeringStreamItem
+import org.schabi.newpipe.core.ui.EmptyState
 
 @Composable
 fun PlaylistsScreen(
@@ -38,6 +40,7 @@ fun PlaylistsScreen(
     viewModel: PlaylistsViewModel = hiltViewModel()
 ) {
     val playlists = viewModel.playlists.collectAsState().value
+    val isLoading = viewModel.isLoading.collectAsState().value
     val showDialog = remember { mutableStateOf(false) }
     val newName = remember { mutableStateOf("") }
 
@@ -80,15 +83,28 @@ fun PlaylistsScreen(
             }
         }
     ) { padding ->
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
-            items(playlists) { playlist ->
-                Text(
-                    text = playlist.name,
-                    modifier = Modifier
-                        .clickable { onPlaylistSelected(playlist) }
-                        .padding(16.dp)
-                )
+        when {
+            isLoading -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(8) { ShimmeringStreamItem() }
+                }
+            }
+            playlists.isEmpty() -> {
+                EmptyState("Keine Playlists")
+            }
+            else -> {
+                LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                    items(playlists) { playlist ->
+                        Text(
+                            text = playlist.name,
+                            modifier = Modifier
+                                .clickable { onPlaylistSelected(playlist) }
+                                .padding(16.dp)
+                        )
+                    }
+                }
             }
         }
     }
 }
+

@@ -22,6 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.schabi.newpipe.core.model.Stream
 import org.schabi.newpipe.core.ui.StreamItem
+import org.schabi.newpipe.core.ui.ShimmeringStreamItem
+import org.schabi.newpipe.core.ui.EmptyState
+import org.schabi.newpipe.core.ui.ErrorState
 import androidx.compose.ui.text.input.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardActions
 
@@ -58,11 +61,21 @@ fun SearchScreen(
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(onSearch = { viewModel.executeSearch() })
             )
-            LazyColumn {
-                items(state.results) { stream ->
-                    StreamItem(stream, onStreamSelected)
+            when {
+                state.isLoading -> {
+                    LazyColumn { items(8) { ShimmeringStreamItem() } }
+                }
+                state.error != null -> {
+                    ErrorState(state.error.localizedMessage ?: "Fehler", onRetry = { viewModel.executeSearch() })
+                }
+                state.results.isEmpty() -> {
+                    EmptyState("Keine Ergebnisse")
+                }
+                else -> {
+                    LazyColumn { items(state.results) { stream -> StreamItem(stream, onStreamSelected) } }
                 }
             }
         }
     }
 }
+

@@ -15,7 +15,8 @@ import org.schabi.newpipe.core.model.Stream
 data class SearchUiState(
     val query: String = "",
     val results: List<Stream> = emptyList(),
-    val isLoading: Boolean = false
+    val isLoading: Boolean = false,
+    val error: Throwable? = null
 )
 
 @HiltViewModel
@@ -33,14 +34,15 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             val query = _uiState.value.query
             if (query.isBlank()) return@launch
-            _uiState.update { it.copy(isLoading = true) }
+            _uiState.update { it.copy(isLoading = true, error = null) }
             getSearchResults(query).collect { result ->
                 result.onSuccess { streams ->
-                    _uiState.update { it.copy(results = streams, isLoading = false) }
-                }.onFailure {
-                    _uiState.update { it.copy(isLoading = false) }
+                    _uiState.update { it.copy(results = streams, isLoading = false, error = null) }
+                }.onFailure { throwable ->
+                    _uiState.update { it.copy(isLoading = false, error = throwable) }
                 }
             }
         }
     }
 }
+

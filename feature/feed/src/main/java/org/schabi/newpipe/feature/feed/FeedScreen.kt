@@ -19,6 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import org.schabi.newpipe.core.model.Stream
 import org.schabi.newpipe.core.ui.StreamItem
+import org.schabi.newpipe.core.ui.ShimmeringStreamItem
+import org.schabi.newpipe.core.ui.EmptyState
 import org.schabi.newpipe.core.ui.components.MainNavigationBar
 import org.schabi.newpipe.core.ui.components.MainTab
 
@@ -32,6 +34,7 @@ fun FeedScreen(
 ) {
     val feed = viewModel.feed.collectAsState().value
     val refreshing = viewModel.isRefreshing.collectAsState().value
+    val isLoading = viewModel.isLoading.collectAsState().value
     val pullState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
 
     Scaffold(
@@ -42,9 +45,21 @@ fun FeedScreen(
             .fillMaxSize()
             .padding(padding)
             .pullRefresh(pullState)) {
-            LazyColumn(Modifier.fillMaxSize()) {
-                items(feed) { stream ->
-                    StreamItem(stream, onStreamSelected)
+            when {
+                isLoading -> {
+                    LazyColumn(Modifier.fillMaxSize()) {
+                        items(8) { ShimmeringStreamItem() }
+                    }
+                }
+                feed.isEmpty() -> {
+                    EmptyState("Dein Feed ist leer.")
+                }
+                else -> {
+                    LazyColumn(Modifier.fillMaxSize()) {
+                        items(feed) { stream ->
+                            StreamItem(stream, onStreamSelected)
+                        }
+                    }
                 }
             }
             PullRefreshIndicator(
@@ -55,3 +70,4 @@ fun FeedScreen(
         }
     }
 }
+
