@@ -1,7 +1,14 @@
 package org.schabi.newpipe.core.data.repository
 
-import org.schabi.newpipe.core.model.Playlist
+import kotlinx.coroutines.flow.Flow
+import org.schabi.newpipe.core.model.LocalPlaylist
+import org.schabi.newpipe.core.model.Stream
 
 interface PlaylistRepository {
-    suspend fun getPlaylist(url: String): Playlist
+    fun getPlaylists(): Flow<List<LocalPlaylist>>
+    suspend fun createPlaylist(name: String, thumbnailUrl: String? = null): Long
+    suspend fun deletePlaylist(id: Long)
+    fun getPlaylistItems(playlistId: Long): Flow<List<Stream>>
+    suspend fun addStreamToPlaylist(playlistId: Long, stream: Stream)
+    suspend fun removeStreamFromPlaylist(playlistId: Long, streamUrl: String)
 }

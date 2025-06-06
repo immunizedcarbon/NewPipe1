@@ -9,6 +9,7 @@ include(":feature:history")
 
 include(":feature:search")
 include(":feature:subscriptions")
+include(":feature:playlists")
 // Use a local copy of NewPipe Extractor by uncommenting the lines below.
 // We assume, that NewPipe and NewPipe Extractor have the same parent directory.
 // If this is not the case, please change the path in includeBuild().
