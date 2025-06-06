@@ -89,4 +89,5 @@ dependencies {
     implementation(project(":feature:search"))
     implementation(project(":feature:subscriptions"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:downloads"))
 }

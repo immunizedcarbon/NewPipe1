@@ -35,6 +35,7 @@ fun DefaultPlayerScreen(url: String, viewModel: PlayerViewModel = hiltViewModel(
     }
     val playlists = viewModel.playlists.collectAsState().value
     val showDialog = remember { mutableStateOf(false) }
+    val showDownloadDialog = remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         AndroidView(
@@ -48,6 +49,9 @@ fun DefaultPlayerScreen(url: String, viewModel: PlayerViewModel = hiltViewModel(
         }
         Button(onClick = { showDialog.value = true }) {
             Text("Add to Playlist")
+        }
+        Button(onClick = { showDownloadDialog.value = true }) {
+            Text("Download")
         }
     }
 
@@ -74,6 +78,29 @@ fun DefaultPlayerScreen(url: String, viewModel: PlayerViewModel = hiltViewModel(
             },
             dismissButton = {
                 TextButton(onClick = { showDialog.value = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    if (showDownloadDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDownloadDialog.value = false },
+            confirmButton = {},
+            title = { Text("Download") },
+            text = {
+                Column {
+                    Button(onClick = {
+                        viewModel.downloadCurrentStream("video")
+                        showDownloadDialog.value = false
+                    }) { Text("Video") }
+                    Button(onClick = {
+                        viewModel.downloadCurrentStream("audio")
+                        showDownloadDialog.value = false
+                    }) { Text("Audio") }
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDownloadDialog.value = false }) { Text("Cancel") }
             }
         )
     }

@@ -19,6 +19,7 @@ import org.schabi.newpipe.feature.playlist_detail.PlaylistDetailScreen
 import org.schabi.newpipe.feature.search.SearchScreen
 import org.schabi.newpipe.feature.settings.SettingsScreen
 import org.schabi.newpipe.feature.feed.FeedScreen
+import org.schabi.newpipe.feature.downloads.DownloadsScreen
 import org.schabi.newpipe.core.ui.components.MainTab
 
 @Composable
@@ -62,6 +63,12 @@ fun MainNavHost(navController: NavHostController = rememberNavController()) {
                 onTabSelected = { tab -> if (tab != MainTab.Playlists) navController.navigate(tab.route) },
                 onSearchClicked = { navController.navigate("search") },
                 onPlaylistSelected = { playlist -> navController.navigate("playlist/${playlist.id}") }
+            )
+        }
+        composable(MainTab.Downloads.route) {
+            DownloadsScreen(
+                selectedTab = MainTab.Downloads,
+                onTabSelected = { tab -> if (tab != MainTab.Downloads) navController.navigate(tab.route) }
             )
         }
         composable(

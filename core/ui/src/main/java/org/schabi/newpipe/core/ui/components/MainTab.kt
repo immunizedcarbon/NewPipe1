@@ -6,6 +6,7 @@ import androidx.compose.material.icons.filled.Subscriptions
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.PlaylistPlay
 import androidx.compose.material.icons.filled.RssFeed
+import androidx.compose.material.icons.filled.Download
 import androidx.compose.ui.graphics.vector.ImageVector
 
 enum class MainTab(val route: String, val label: String, val icon: ImageVector) {
@@ -13,5 +14,6 @@ enum class MainTab(val route: String, val label: String, val icon: ImageVector) 
     Trends("main", "Trends", Icons.Filled.Home),
     History("history", "History", Icons.Filled.History),
     Subscriptions("subscriptions", "Subscriptions", Icons.Filled.Subscriptions),
-    Playlists("playlists", "Playlists", Icons.Filled.PlaylistPlay)
+    Playlists("playlists", "Playlists", Icons.Filled.PlaylistPlay),
+    Downloads("downloads", "Downloads", Icons.Filled.Download)
 }

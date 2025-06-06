@@ -14,6 +14,7 @@ include(":feature:playlists")
 include(":feature:settings")
 include(":feature:channel")
 include(":feature:playlist_detail")
+include(":feature:downloads")
 // Use a local copy of NewPipe Extractor by uncommenting the lines below.
 // We assume, that NewPipe and NewPipe Extractor have the same parent directory.
 // If this is not the case, please change the path in includeBuild().

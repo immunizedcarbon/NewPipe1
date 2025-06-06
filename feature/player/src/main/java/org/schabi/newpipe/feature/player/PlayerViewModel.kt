@@ -1,7 +1,11 @@
 package org.schabi.newpipe.feature.player
 
+import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,6 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import org.schabi.newpipe.core.model.Channel
 import org.schabi.newpipe.core.model.LocalPlaylist
+import org.schabi.newpipe.feature.downloads.DownloadWorker
 
 @HiltViewModel
 class PlayerViewModel @Inject constructor(
@@ -26,7 +31,8 @@ class PlayerViewModel @Inject constructor(
     private val addStreamToHistory: AddStreamToHistoryUseCase,
     private val subscribeToChannel: SubscribeToChannelUseCase,
     getPlaylists: GetPlaylistsUseCase,
-    private val addStreamToPlaylist: AddStreamToPlaylistUseCase
+    private val addStreamToPlaylist: AddStreamToPlaylistUseCase,
+    @ApplicationContext private val context: Context
 ) : ViewModel() {
     val playlists: StateFlow<List<LocalPlaylist>> =
         getPlaylists().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
@@ -70,5 +76,13 @@ class PlayerViewModel @Inject constructor(
     fun addCurrentStreamToPlaylist(id: Long) {
         val stream = currentStream ?: return
         viewModelScope.launch { addStreamToPlaylist(id, stream) }
+    }
+
+    fun downloadCurrentStream(type: String) {
+        val stream = currentStream ?: return
+        val request = OneTimeWorkRequestBuilder<DownloadWorker>()
+            .setInputData(DownloadWorker.buildData(stream.url, type))
+            .build()
+        WorkManager.getInstance(context).enqueue(request)
     }
 }
