@@ -33,3 +33,9 @@ subprojects {
         apply(plugin = "io.gitlab.arturbosch.detekt")
     }
 }
+
+subprojects {
+    configurations.all {
+        exclude(group = "com.android.support", module = "support-compat")
+    }
+}
