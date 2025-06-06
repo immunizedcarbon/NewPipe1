@@ -26,11 +26,3 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:${rootProject.extra["hilt_version"]}")
 }
 
-kapt {
-    arguments {
-        arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.incremental", "true")
-        arg("room.expandProjection", "true")
-    }
-}
-
