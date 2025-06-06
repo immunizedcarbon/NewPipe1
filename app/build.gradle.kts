@@ -69,9 +69,9 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0") // [Update 2025-06-06: von 1.11.0]
 
     // Room (einheitlich auf 2.7.1 setzen)
-    // Alt: implementation("androidx.room:room-runtime:2.8.0")
+    // Alt: implementation("androidx.room:room-runtime:2.7.1")
     implementation("androidx.room:room-runtime:2.7.1")
-    // Alt: implementation("androidx.room:room-ktx:2.8.0")
+    // Alt: implementation("androidx.room:room-ktx:2.7.1")
     implementation("androidx.room:room-ktx:2.7.1")
     kapt("androidx.room:room-compiler:2.7.1")
 
@@ -86,8 +86,8 @@ dependencies {
     // Alt: implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("androidx.navigation:navigation-compose:2.9.0") // [Update 2025-06-06: von 2.7.7]
     // Hilt Navigation Compose
-    // Alt: implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // [Update 2025-06-06: von 1.3.0]
+    // Alt: implementation("androidx.hilt:hilt-navigation-compose:1.3.0-alpha01")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0") // [Update 2025-06-06: von 1.2.0]
 
     implementation(project(":core:ui"))
     implementation(project(":core:domain"))
