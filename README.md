@@ -1,50 +1,45 @@
-# NewPipe
+# NewPipe Android Client
 
-NewPipe is a free and open source Android application that lets you watch and listen to content from popular streaming sites without relying on proprietary APIs or Google services. It is designed to be lightweight and respects your privacy.
-
-## Supported Services
-- YouTube and YouTube Music
-- PeerTube and compatible instances
-- Bandcamp
-- SoundCloud
-- media.ccc.de
+This repository contains a simplified, modular Android application inspired by the original [NewPipe](https://newpipe.net) project. It is built entirely with **Kotlin** and **Jetpack Compose**, using **Hilt** for dependency injection.
 
 ## Features
-- Play videos at up to 4K resolution
-- Background playback with audio-only mode
-- Popup player (picture-in-picture)
-- Live stream support
-- Optional subtitles and closed captions
-- Search for videos, audio tracks, channels and playlists
-- Subscribe to channels without an account
-- Notifications for new channel uploads
-- Channel groups and feed views
-- Local and remote playlists
-- Download videos, audio and subtitles
-- Kodi integration
-- Optionally hide comments, related videos or other information
+- Browse trending streams on the home screen
+- Search for videos across supported services
+- Watch videos with an ExoPlayer based player
+- Subscribe to channels and view a personalised feed
+- Maintain a local watch history
+- Manage playlists and playlist contents
+- View individual channels and their uploads
+- Download audio or video streams for offline playback
+- Customise appearance and playback defaults in the settings
 
-## Building the App
-NewPipe is built with Kotlin and Jetpack Compose. To compile a debug APK you need the Android SDK. Once installed, create a `local.properties` file in the project root and set the SDK path:
+Most features rely on a local Room database and the NewPipe Extractor library. Several repository implementations are currently stubbed and meant as examples.
 
-```
-sdk.dir=/path/to/Android/sdk
-```
+## Project Structure
+The codebase is organised as a set of Gradle modules:
 
-Then run the Gradle task:
+- **app** – the main Android application module
+- **core:model** – data classes shared across the project
+- **core:data** – Room DAOs, repositories and preferences
+- **core:domain** – use cases that expose app logic
+- **core:ui** – reusable Compose components and theming
+- **feature:** modules for each screen such as `feed`, `player`, `search`, `subscriptions`, `history`, `playlists`, `playlist_detail`, `downloads`, `channel` and `settings`
 
-```bash
-./gradlew assembleDebug
-```
+Each feature module defines its own UI screens and ViewModels while depending on the domain layer for business logic.
 
-The generated APK will be located in `app/build/outputs/apk/debug/`.
+## Building
+1. Install the Android SDK and ensure `adb` is available.
+2. Create a `local.properties` file in the project root with the path to your SDK:
+   ```
+   sdk.dir=/path/to/Android/sdk
+   ```
+3. Run the following command to produce a debug APK:
+   ```bash
+   ./gradlew assembleDebug
+   ```
+   The output can be found under `app/build/outputs/apk/`.
 
-## Installation
-- The recommended way to install NewPipe is via the [F-Droid repository](https://newpipe.net/FAQ/tutorials/install-add-fdroid-repo/).
-- You can also download APKs from the [GitHub Releases](https://github.com/TeamNewPipe/NewPipe/releases) page and verify the signing key.
-
-## Contributing
-Contributions are welcome! Please read the guidelines in [CONTRIBUTING.md](.github/CONTRIBUTING.md) before opening an issue or pull request.
+Unit and instrumentation tests are located under `app/src/test` and `app/src/androidTest` respectively. Running them requires a proper Android tooling setup.
 
 ## License
-NewPipe is licensed under the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
+NewPipe is released under the terms of the [GNU General Public License v3](https://www.gnu.org/licenses/gpl-3.0.en.html).
