@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.plugin.compose") version "1.5.14"
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
