@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.plugin.compose") version "2.1.21"
+    id("org.jetbrains.kotlin.plugin.compose") version "1.5.14"
     id("com.android.library")
     kotlin("android")
 }
@@ -32,7 +32,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")
 
-    implementation("io.coil-kt:coil-compose:2.7.0") // [Update 2025-06-06: von 2.6.0]
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
-    implementation("com.valentinilk.shimmer:compose-shimmer:1.3.0") // [Update 2025-06-06: von 1.2.0]
+    implementation("com.valentinilk.shimmer:compose-shimmer:1.2.0")
 }

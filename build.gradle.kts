@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 plugins {
-    id("io.gitlab.arturbosch.detekt") version "1.23.8" apply false // [Update 2025-06-06: von 1.24.0]
+    id("io.gitlab.arturbosch.detekt") version "1.24.0" apply false
 }
 
 buildscript {
@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.6.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.56.2") // [Update 2025-06-06: von 2.48]
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.51.1")
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle.kts files
     }
@@ -21,8 +21,8 @@ buildscript {
 
 allprojects {
     extra["kotlin_version"] = "2.0.0"
-    extra["hilt_version"] = "2.56.2" // [Update 2025-06-06: von 2.48]
-    extra["compose_bom_version"] = "2025.05.00" // [Update 2025-06-06: von 2024.02.02]
+    extra["hilt_version"] = "2.51.1"
+    extra["compose_bom_version"] = "2024.05.00"
 }
 
 subprojects {
