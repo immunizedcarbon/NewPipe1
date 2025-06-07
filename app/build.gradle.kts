@@ -59,7 +59,7 @@ android {
 
 dependencies {
     implementation("com.github.TeamNewPipe:nanojson:1.3")
-    implementation("com.github.TeamNewPipe.NewPipeExtractor:v0.26.1")
+    implementation("com.github.TeamNewPipe.NewPipeExtractor:NewPipeExtractor:v0.26.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:${rootProject.extra["kotlin_version"]}")
 
     implementation("androidx.core:core-ktx:1.12.0")
