@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.jetbrains.kotlin.plugin.compose") version "1.5.14"
+    id("org.jetbrains.kotlin.plugin.compose")
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
